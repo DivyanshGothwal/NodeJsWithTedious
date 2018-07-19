@@ -6,7 +6,8 @@ var config = {
     server:'yourServer',
     options:{
         database:'yourDatabase',
-        rowCollectionOnRequestCompletion: true
+        rowCollectionOnRequestCompletion: true,
+        rowCollectionOnDone : true
     }
 };
 

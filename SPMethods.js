@@ -66,14 +66,14 @@ var callSpGetAffectedRoutes = function(responseCallback, connection, params){
 
 
 var callGetRouteDto = function(responseCallback, connection, params){
+    let responseArray = [];
     let request = new Request("[dbo].[uspGetRouteAndStopAndShipmentDetails]", function(err,rowCount,rows) {
         if(err){
             console.log(err);
         }
         else{
-            var response = CreateResposeArray(rows);
-            response.shift();
-            responseCallback(response);
+            responseArray.shift();
+            responseCallback(responseArray);
         }
     });
 
@@ -85,6 +85,10 @@ var callGetRouteDto = function(responseCallback, connection, params){
     });
     request.addParameter('tblRouteId', TYPES.TVP, IdListType);
     connection.callProcedure(request);
+    request.on('doneInProc', function (rowCount, more, rows) { 
+        var response = CreateResposeArray(rows);
+        responseArray.push(response);
+    });
 };
 
 
